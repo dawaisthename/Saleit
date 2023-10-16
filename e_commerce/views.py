@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .models import CustomUser, Category, Product, Cart, Order, OrderDetails, Review, Image
+from .models import CustomUser, Category, Product, Cart, Order, OrderItem, Review, Image
 from rest_framework import viewsets
 from .serializers import CustomUserSerializer, CategorySerializer, ProductSerializer, CartSerializer, OrderSerializer, OrderDetailsSerializer, ReviewSerializer, ImageSerializer
 
@@ -50,11 +50,11 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 # Views for OrderDetails
 class OrderDetailsListCreateView(generics.ListCreateAPIView):
-    queryset = OrderDetails.objects.all()
+    queryset = OrderItem.objects.all()
     serializer_class = OrderDetailsSerializer
 
 class OrderDetailsDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = OrderDetails.objects.all()
+    queryset = OrderItem.objects.all()
     serializer_class = OrderDetailsSerializer
 
 # Views for Review
