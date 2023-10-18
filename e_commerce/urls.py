@@ -20,7 +20,7 @@ urlpatterns = [
     path('categories/<int:pk>/', CategoryDetailView.as_view(), name='category-detail'),
 
     # Product URLs
-    path('products/', ProductListCreateView.as_view(), name='product-list-create'),
+    path('', ProductListCreateView.as_view(), name='product-list-create'),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
 
     # Cart URLs
