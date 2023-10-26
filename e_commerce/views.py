@@ -29,6 +29,14 @@ class ProductListCreateView(generics.ListCreateAPIView):
 class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+class ProductsByCategoryAPIView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+            category_name = self.kwargs['category_name']  # Assuming you pass the category name in the URL
+            category = Category.objects.get(name=category_name)
+            queryset = Product.objects.filter(category=category)
+            return queryset
 
 # Views for Cart
 class CartListCreateView(generics.ListCreateAPIView):

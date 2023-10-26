@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./home.jsx";
+import MainHome from "./partials/MainHome.jsx";
+import ProLayout from "./partials/ProLayout.jsx";
+import Detail from "./Detail.jsx";
+import Cart from "./cart.jsx";
+import All from "./all.jsx";
 
 function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    async function products() {
-      try {
-        const response = await fetch(`http://127.0.0.1:8000`);
-        if (!response.ok) {
-          throw new Error("Network error");
-        }
-        const result = await response.json();
-        console.log("these");
-        setData(result);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-    products(); // Invoke the function
-  }, []);
-
-  console.log(data);
-
-  return <>ASD</>;
+  return (
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<MainHome />}>
+          <Route index element={<Home />} />
+          <Route path="/category/:category" element={<All />}>
+            <Route index element={<All />} />
+          </Route>
+          <Route path="/product/:id" element={<ProLayout />}>
+            <Route index element={<Detail />} />
+          </Route>
+          <Route path="cart">
+            <Route index element={<Cart />} />
+          </Route>
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
