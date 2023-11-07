@@ -1,16 +1,9 @@
 from rest_framework import generics
-from .models import CustomUser, Category, Product, Cart, Order, OrderItem, Review, Image
+from .models import  Category, Product, Cart, Cartitems, Review, Image
 from rest_framework import viewsets
-from .serializers import CustomUserSerializer, CategorySerializer, ProductSerializer, CartSerializer, OrderSerializer, OrderDetailsSerializer, ReviewSerializer, ImageSerializer
+from .serializers import  CategorySerializer, ProductSerializer, CartSerializer, ReviewSerializer, ImageSerializer,CartItemSerializer,AddCartItemSerializer
 
-# Views for CustomUser
-class CustomUserListCreateView(generics.ListCreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
 
-class CustomUserDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = CustomUserSerializer
 
 # Views for Category
 class CategoryListCreateView(generics.ListCreateAPIView):
@@ -42,28 +35,33 @@ class ProductsByCategoryAPIView(generics.ListAPIView):
 class CartListCreateView(generics.ListCreateAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+    
 
 class CartDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
 
-# Views for Order
-class OrderListCreateView(generics.ListCreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-
-class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-
-# Views for OrderDetails
-class OrderDetailsListCreateView(generics.ListCreateAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderDetailsSerializer
-
-class OrderDetailsDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderDetailsSerializer
+# views for cartitem
+class CartItemCreatView(generics.ListCreateAPIView):
+  
+    lookup_field = 'id'
+    
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return AddCartItemSerializer
+        
+        return CartItemSerializer
+    
+    def get_serializer_context(self):
+        return {"cart_id": self.kwargs["pk"]}
+    def get_queryset(self):
+        cart_pk = self.kwargs['pk']
+        return Cartitems.objects.filter(cart=cart_pk)
+class CartItemsDetailView(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CartItemSerializer
+    queryset = Cartitems.objects.all()
+    lookup_field = 'id'
+     
 
 # Views for Review
 class ReviewListCreateView(generics.ListCreateAPIView):

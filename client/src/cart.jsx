@@ -6,12 +6,14 @@ function Cart() {
   useEffect(() => {
     async function cart() {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/carts/`);
+        const response = await fetch(
+          `http://127.0.0.1:8000/carts/daa45ee7-9c17-4c74-9d7b-d8a9a81ab707/cartitems`
+        );
         if (!response.ok) {
           throw new Error("Network error");
         }
         const result = await response.json();
-        console.log("these");
+        // console.log("these");
         setCart(result);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -19,6 +21,27 @@ function Cart() {
     }
     cart(); // Invoke the function
   }, []);
+  async function Addtocart() {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/carts/daa45ee7-9c17-4c74-9d7b-d8a9a81ab707/cartitems`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            product_id: 12345,
+            quantity: 10,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network error");
+      }
+      const result = await response.json();
+      setCart(result);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
   console.log(cart);
 
   return (
@@ -87,12 +110,12 @@ function Cart() {
                                 <h3>
                                   <a href="#">Throwback Hip Bag</a>
                                 </h3>
-                                <p class="ml-4">{cart.product.price}</p>
+                                <p class="ml-4">{cart.quantity}</p>
                               </div>
                               <p class="mt-1 text-sm text-gray-500">Salmon</p>
                             </div>
                             <div class="flex flex-1 items-end justify-between text-sm">
-                              <p class="text-gray-500">{cart.product.brand}</p>
+                              <p class="text-gray-500">{cart.product.price}</p>
 
                               <div class="flex">
                                 <button

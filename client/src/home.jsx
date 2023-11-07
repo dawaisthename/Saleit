@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./partials/header";
 import Footer from "./partials/footer";
 import { Link } from "react-router-dom";
+import cartImage from "./images/cart.png";
 ("use client");
 
 function Home() {
@@ -25,57 +26,26 @@ function Home() {
     products(); // Invoke the function
   }, []);
 
-  const addToCart = async (productId) => {
-    try {
-      const user_id = 1; // Replace with your user ID
-
-      // Check if the user has an existing cart
-      const response = await fetch(`http://127.0.0.1:8000/carts/${user_id}`);
-      let cartId;
-
-      if (response.ok) {
-        const cartData = await response.json();
-        cartId = cartData.cart_id;
-      } else {
-        // Create a new cart if the user doesn't have one
-        const createCartResponse = await fetch("/api/carts", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ user_id, productId }),
-        });
-
-        if (createCartResponse.ok) {
-          const createCartData = await createCartResponse.json();
-          cartId = createCartData.cart_id;
-        } else {
-          throw new Error("Failed to create a cart");
-        }
-      }
-
-      // Add the product to the cart
-      const addToCartResponse = await fetch(`/api/carts/${cartId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ product_id: productId }),
-      });
-
-      if (addToCartResponse.ok) {
-        // Success handling
-        console.log("Product added to cart successfully");
-      } else {
-        // Error handling
-        console.error("Failed to add product to cart");
-      }
-    } catch (error) {
-      // Error handling
-      console.error("An error occurred:", error);
-    }
-  };
-
+  // async function AddToCart(product_id) {
+  //   try {
+  //     const response = await fetch(
+  //       `http://127.0.0.1:8000/carts/daa45ee7-9c17-4c74-9d7b-d8a9a81ab707/cartitems`,
+  //       {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           product_id: product_id,
+  //           quantity: 10,
+  //         }),
+  //       }
+  //     );
+  //     if (!response.ok) {
+  //       throw new Error("Network error");
+  //     }
+  //     const result = await response.json();
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // }
   // Invoke the function to add the product to the cart
 
   console.log(datas);
@@ -123,7 +93,34 @@ function Home() {
           ></input>
         </div>
       </form>
-      <Link to="/cart">cart</Link>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          marginRight: "50px",
+          marginTop: "-30px",
+        }}
+        className="cart-icon-container"
+      >
+        <Link to="/cart" className="cart-icon">
+          <img
+            src={cartImage}
+            alt="Cart"
+            className="cart-image"
+            height={35}
+            width={35}
+          />
+        </Link>
+      </div>
+      {/* <Link to="/cart">
+        <img
+          src={cartImage}
+          alt="Cart"
+          className="cart-image"
+          height={35}
+          width={35}
+        />
+      </Link> */}
       <Header />
       <div
         className="mt-12"
@@ -221,7 +218,7 @@ function Home() {
                       </span>
                       <a
                         href="#"
-                        onClick={addToCart(data.id)}
+                        // onClick={AddToCart(data.id)}
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
                         Add to cart
@@ -257,10 +254,10 @@ function Home() {
           <div class="flex items-center justify-center h-full w-full bg-gray-900 bg-opacity-50">
             <div class="text-center">
               <h1 class="text-white text-2xl font-semibold uppercase md:text-3xl">
-                Build Your new <span class="underline text-blue-400">Saas</span>
+                get good products with perfect price
               </h1>
               <button class="mt-4 px-4 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                Start project
+                Buy Now
               </button>
             </div>
           </div>
@@ -358,7 +355,7 @@ function Home() {
                       </span>
                       <a
                         href="#"
-                        onClick={addToCart(data.id)}
+                        // onClick={AddToCart(data.id)}
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
                         Add to cart
@@ -490,12 +487,12 @@ function Home() {
                       </span>
                     </div>
                     <div class="flex items-center justify-between">
-                      <span class="text-3xl font-bold text-gray-900 dark:text-white">
+                      <span class="text-3x]l font-bold text-gray-900 dark:text-white">
                         {data.price}
                       </span>
                       <a
                         href="#"
-                        onClick={addToCart(data.id)}
+                        // onClick={addToCart(data.id)}
                         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
                         Add to cart

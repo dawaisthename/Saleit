@@ -3,7 +3,7 @@ import React from "react";
 function Header() {
   return (
     <div
-      class="container  mt-20 mb-24 mx-auto pt-20 md:px-6 "
+      class="container mt-2 mb-24 mx-auto pt-20 md:px-6 "
       style={{
         height: "500px",
         backgroundImage: "url(http://source.unsplash.com/l8p1aWZqHvE)",
@@ -23,8 +23,10 @@ function Header() {
               </span>
             </h2>
             <p class="text-lg text-neutral-100 dark:text-neutral-300">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-              officia consequatur adipisci tenetur repudiandae rerum quos.
+              {" "}
+              Saleit: Where Fair Prices Meet Happy Customers. At Saleit, we
+              believe that everyone deserves access to quality products at fair
+              prices.
             </p>
           </div>
         </div>
